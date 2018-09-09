@@ -1,0 +1,7 @@
+{
+  "name": "Aarfid",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
