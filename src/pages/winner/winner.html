@@ -36,19 +36,19 @@
             </button>
    
             <!-- Direct Add Button as Fallback -->
-            <ion-item *ngIf="!child.children" ion-item detail-none class="child-item" text-wrap>
+            <ion-item *ngIf="!child.children" ion-item detail-none class="child-item" text-wrap (click)="presentPopover($event,child)">
               <h2>{{ child.name }}</h2>
               <p text-lowercase>{{ child.information }}</p>
-              <button ion-button outline item-end (click)="presentPopover($event,child)">{{ child.price }}</button>
+              <button ion-button outline item-end >{{ child.price }}</button>
             </ion-item>
    
             <ion-list *ngIf="child.children && child.open">
               <!-- Third Level -->
-              <ion-item *ngFor="let item of child.children; let k = index" detail-none class="child-item" text-wrap>
+              <ion-item *ngFor="let item of child.children; let k = index" detail-none class="child-item" text-wrap (click)="presentPopover($event,item)">
                 <h2>{{ item.name }}</h2>
                 <p text-lowercase>{{ item.information }}</p>
                 <!-- Direct Add Button -->
-                <button ion-button outline item-end (click)="presentPopover($event,item)">{{ item.price }}</button>
+                <button ion-button outline item-end >{{ item.price }}</button>
               </ion-item>
             </ion-list>
    
