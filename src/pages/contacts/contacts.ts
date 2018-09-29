@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, PopoverController } from 'ionic-angular';
+import { NavController, PopoverController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
