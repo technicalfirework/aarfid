@@ -12,7 +12,7 @@ import { EventsPage } from '../pages/events/events';
 import { ContactsPage } from '../pages/contacts/contacts';
 import { WinnerPage } from '../pages/winner/winner';
 import {HttpClientModule} from '@angular/common/http'
-import { FormsModule } from '@angular/forms';
+// import { FormsModule } from '@angular/forms';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ContactDetailsPage } from '../pages/contact-details/contact-details';
 @NgModule({
