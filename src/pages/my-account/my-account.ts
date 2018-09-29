@@ -19,7 +19,6 @@ export class MyAccountPage {
   };
   loader: any;
   constructor(private alertCtrl: AlertController, private dataService: DataServiceProvider, private storage: LocalStorageServiceProvider, private loadingCtrl: LoadingController) {
-    this.dataService.GetEvents();
     this.presentLoading();
     const req: loginRequest = { portalId: '2', oldPassword: 'browns', newPassword: 'new', username: 'jim.brown@browns.com' };
     this.dataService.AuthenticateUser(req).subscribe(response => {

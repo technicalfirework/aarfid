@@ -13,12 +13,10 @@ export class DataServiceProvider {
   }
   public GetEvents() {
     const getEventURL = this.global.ApiBase + 'api/item/getallevents/' + this.global.PortalId + '/' + this.global.EventListStartDate + '/' + this.global.EventListEndDate;
-    debugger;
     return this.http.get(getEventURL);
   }
   public GetVendorEvents(personId: string) {
-    const getEventURL = this.global.ApiBase + 'api/item/getallevents/' + personId + '/' + this.global.PortalId
-    debugger;
+    const getEventURL = this.global.ApiBase + 'api/person/GetVendorEvents/' + personId + '/' + this.global.PortalId
     return this.http.get(getEventURL);
   }
 }
