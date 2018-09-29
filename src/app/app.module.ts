@@ -16,6 +16,7 @@ import {HttpClientModule} from '@angular/common/http'
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ContactDetailsPage } from '../pages/contact-details/contact-details';
 import { DataServiceProvider } from '../providers/data-service/data-service';
+import { GlobalsService } from '../providers/shared/globalService';
 @NgModule({
   declarations: [
     MyApp,
@@ -48,7 +49,8 @@ import { DataServiceProvider } from '../providers/data-service/data-service';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ScreenOrientation,
-    DataServiceProvider
+    DataServiceProvider,
+    GlobalsService
   ]
 })
 export class AppModule {}

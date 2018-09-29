@@ -2,29 +2,33 @@ import { Component } from '@angular/core';
 import { AlertController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { person } from '../../models/person';
+import { DataServiceProvider } from '../../providers/data-service/data-service';
+import { loginRequest } from '../../models/loginRequest';
 
 @Component({
   selector: 'page-my-account',
   templateUrl: 'my-account.html',
 })
 export class MyAccountPage {
-  profile:person= {
+  profile: person = {
     photoURL: '',
     fName: '',
     email: '',
     lName: '',
     personId: ''
   };
-  constructor(private alertCtrl: AlertController, private http: HttpClient) {
+  constructor(private alertCtrl: AlertController, private dataService: DataServiceProvider) {
     debugger;
-    this.http.post<person>('http://eventmanage.azurewebsites.net/api/person/ValidateAndGetPerson/', { portalId: 2, oldPassword: 'browns', newPassword: 'new', username: 'jim.brown@browns.com' }).subscribe(response => {
+    const req: loginRequest = { portalId: '2', oldPassword: 'browns', newPassword: 'new', username: 'jim.brown@browns.com' };
+    this.dataService.AuthenticateUser(req).subscribe(response => {
       debugger
-      const myProfile=response["entity"];
+      const myProfile = response["entity"];
       this.profile.email = myProfile.email;
       this.profile.fName = myProfile.fName;
       this.profile.lName = myProfile.lName;
       this.profile.personId = myProfile.personId;
     });
+
   }
 
   changePassword() {
