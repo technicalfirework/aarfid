@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { AlertController } from 'ionic-angular';
-import { HttpClient } from '@angular/common/http';
+import { AlertController, LoadingController } from 'ionic-angular';
 import { person } from '../../models/person';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { loginRequest } from '../../models/loginRequest';
+import { LocalStorageServiceProvider } from '../../providers/local-storage-service/local-storage-service';
 
 @Component({
   selector: 'page-my-account',
@@ -17,8 +17,10 @@ export class MyAccountPage {
     lName: '',
     personId: ''
   };
-  constructor(private alertCtrl: AlertController, private dataService: DataServiceProvider) {
+  loader: any;
+  constructor(private alertCtrl: AlertController, private dataService: DataServiceProvider, private storage: LocalStorageServiceProvider, private loadingCtrl: LoadingController) {
     debugger;
+    this.presentLoading();
     const req: loginRequest = { portalId: '2', oldPassword: 'browns', newPassword: 'new', username: 'jim.brown@browns.com' };
     this.dataService.AuthenticateUser(req).subscribe(response => {
       debugger
@@ -27,6 +29,9 @@ export class MyAccountPage {
       this.profile.fName = myProfile.fName;
       this.profile.lName = myProfile.lName;
       this.profile.personId = myProfile.personId;
+      debugger;
+      this.storage.set('Profile', myProfile);
+      this.loader.dismiss();
     });
 
   }
@@ -66,5 +71,11 @@ export class MyAccountPage {
       ]
     });
     alert.present();
+  }
+  presentLoading() {
+    this.loader = this.loadingCtrl.create({
+      content: "Please wait...",      
+    });
+    this.loader.present();
   }
 }

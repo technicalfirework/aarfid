@@ -17,6 +17,8 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ContactDetailsPage } from '../pages/contact-details/contact-details';
 import { DataServiceProvider } from '../providers/data-service/data-service';
 import { GlobalsService } from '../providers/shared/globalService';
+import { IonicStorageModule } from '@ionic/storage'
+import { LocalStorageServiceProvider } from '../providers/local-storage-service/local-storage-service';
 @NgModule({
   declarations: [
     MyApp,
@@ -30,7 +32,8 @@ import { GlobalsService } from '../providers/shared/globalService';
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
     
   ],
   bootstrap: [IonicApp],
@@ -50,7 +53,8 @@ import { GlobalsService } from '../providers/shared/globalService';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ScreenOrientation,
     DataServiceProvider,
-    GlobalsService
+    GlobalsService,
+    LocalStorageServiceProvider
   ]
 })
 export class AppModule {}
