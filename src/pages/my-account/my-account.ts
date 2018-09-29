@@ -19,18 +19,16 @@ export class MyAccountPage {
   };
   loader: any;
   constructor(private alertCtrl: AlertController, private dataService: DataServiceProvider, private storage: LocalStorageServiceProvider, private loadingCtrl: LoadingController) {
-    debugger;
+    this.dataService.GetEvents();
     this.presentLoading();
     const req: loginRequest = { portalId: '2', oldPassword: 'browns', newPassword: 'new', username: 'jim.brown@browns.com' };
     this.dataService.AuthenticateUser(req).subscribe(response => {
-      debugger
       const myProfile = response["entity"];
       this.profile.email = myProfile.email;
       this.profile.fName = myProfile.fName;
       this.profile.lName = myProfile.lName;
       this.profile.personId = myProfile.personId;
-      debugger;
-      this.storage.set('Profile', myProfile);
+      this.storage.set('Profile', this.profile);
       this.loader.dismiss();
     });
 
@@ -74,7 +72,7 @@ export class MyAccountPage {
   }
   presentLoading() {
     this.loader = this.loadingCtrl.create({
-      content: "Please wait...",      
+      content: "Please wait...",
     });
     this.loader.present();
   }
