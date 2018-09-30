@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewController, NavParams } from 'ionic-angular';
+import { ViewController, NavParams, ToastController } from 'ionic-angular';
 import { contacts } from '../../models/contacts';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { LocalStorageServiceProvider } from '../../providers/local-storage-service/local-storage-service';
@@ -26,10 +26,26 @@ export class ContactDetailsPage {
   selectedFileIds: number[] = [];
   person: person;
   notes: string = '';
-  constructor(public navParams: NavParams, public viewCtrl: ViewController, private dataService: DataServiceProvider, private storage: LocalStorageServiceProvider) { }
+  toast: any;
+  constructor(private toastCtrl: ToastController, private navParams: NavParams, private viewCtrl: ViewController, private dataService: DataServiceProvider, private storage: LocalStorageServiceProvider) { }
 
   close() {
     this.viewCtrl.dismiss();
+  }
+  presentToast(message, status) {
+    this.toast = this.toastCtrl.create({
+      cssClass: 'error',
+      message: message,
+      duration: 30000,
+      position: 'top'
+    });
+
+    this.toast.onDidDismiss(() => {
+      this.viewCtrl.dismiss();
+      console.log('Dismissed toast');
+    });
+
+    this.toast.present();
   }
   ionViewDidEnter() {
     this.storage.get('Profile').then(response => {
@@ -53,9 +69,11 @@ export class ContactDetailsPage {
       }
     }
   }
-  Send(){
-    this.dataService.SendDocumentsToParticipants(this.person.personId,this.contact.personId,this.selectedFileIds).subscribe(resp=>{
-
+  Send() {
+    this.dataService.SendDocumentsToParticipants(this.person.personId, this.contact.personId, this.selectedFileIds).subscribe(resp => {
+      this.presentToast('Sent Successfully', 0)
+    }, error => {
+      this.presentToast('Error Occured ', 1)
     });
   }
   // ionViewDidLoad() {
