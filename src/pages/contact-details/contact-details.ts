@@ -34,7 +34,7 @@ export class ContactDetailsPage {
   }
   presentToast(message, status) {
     this.toast = this.toastCtrl.create({
-      cssClass: 'error',
+      cssClass: status == 0 ? 'success' : 'error',
       message: message,
       duration: 30000,
       position: 'top'
@@ -72,7 +72,7 @@ export class ContactDetailsPage {
   Send() {
     this.dataService.SendDocumentsToParticipants(this.person.personId, this.contact.personId, this.selectedFileIds).subscribe(resp => {
       this.presentToast('Sent Successfully', 0)
-    }, error => {
+    },error=>{
       this.presentToast('Error Occured ', 1)
     });
   }
