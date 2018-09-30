@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { loginRequest } from '../../models/loginRequest';
 import { GlobalsService } from '../shared/globalService';
@@ -31,5 +31,18 @@ export class DataServiceProvider {
   public getFiles(fileId: number, docType: string, personId: string) {
     const getFilesURL = this.global.ApiBase + 'api/Person/GetFiles/' + fileId + '/' + this.global.PortalId + '/' + docType + '/' + personId;
     return this.http.get(getFilesURL);
+  }
+  public SendDocumentsToParticipants(vendorId: string, participantId: number, fileIds: any) {
+    const sendDocumentsURL = this.global.ApiBase + 'api/shared/SendDocumentsToParticipants';
+   debugger;
+    const request = {
+      'vendorId': vendorId,
+      'participantId': participantId,
+      'fileIds': fileIds,
+      'portalId': this.global.PortalId
+    };
+    return this.http.post(sendDocumentsURL, JSON.stringify(request), {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    })
   }
 }

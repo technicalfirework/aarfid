@@ -22,8 +22,10 @@ export class ContactDetailsPage {
     company: '',
     open: false
   };
-  files:any[];
+  files: any[];
+  selectedFileIds: number[] = [];
   person: person;
+  notes: string = '';
   constructor(public navParams: NavParams, public viewCtrl: ViewController, private dataService: DataServiceProvider, private storage: LocalStorageServiceProvider) { }
 
   close() {
@@ -33,16 +35,32 @@ export class ContactDetailsPage {
     this.storage.get('Profile').then(response => {
       debugger;
       this.person = response;
-      this.dataService.getFiles(null,'DOCT012',this.person.personId).subscribe(fileResponse => {
+      this.dataService.getFiles(null, 'DOCT012', this.person.personId).subscribe(fileResponse => {
         debugger;
-         this.files=fileResponse["entity"]
-         this.contact = this.navParams.get('contact');
+        this.files = fileResponse["entity"]
+        this.contact = this.navParams.get('contact');
       })
     })
   }
+  fileChange(checkBox, item) {
+    debugger;
+    if (checkBox.checked) {
+      this.selectedFileIds.push(item.fileId);
+    } else {
+      var index = this.selectedFileIds.indexOf(item.fileId);
+      if (index > -1) {
+        this.selectedFileIds.splice(index, 1);
+      }
+    }
+  }
+  Send(){
+    this.dataService.SendDocumentsToParticipants(this.person.personId,this.contact.personId,this.selectedFileIds).subscribe(resp=>{
+
+    });
+  }
   // ionViewDidLoad() {
   //   debugger;
-    
+
   //   console.log(this.navParams.get('contact'));
   // }
 

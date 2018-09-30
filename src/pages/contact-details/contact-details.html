@@ -25,19 +25,19 @@
       <button item-right ion-button small>Save</button>
     </ion-row>
     <ion-row>
-      <ion-textarea rows="4" style="border:1px solid grey"></ion-textarea>
+      <ion-textarea [(ngModel)]="notes" rows="4" style="border:1px solid grey"></ion-textarea>
     </ion-row>
     <ion-row>
       <ion-label text-center class="text-bold">
         Product Literature
       </ion-label>
-      <button item-right ion-button small>Send</button>
+      <button item-right ion-button small (click)="Send()">Send</button>
     </ion-row>
     <ion-row>
       <ion-list *ngFor="let item of files; let i = index">
         <ion-item style="border:0">
           <ion-label>{{item.fileName}}</ion-label>
-          <ion-checkbox [(ngModel)]="item.fileId" (ionChange)="updateCucumber()"></ion-checkbox>
+          <ion-checkbox (ionChange)="fileChange($event,item)"></ion-checkbox>
         </ion-item>
       </ion-list>
     </ion-row>
