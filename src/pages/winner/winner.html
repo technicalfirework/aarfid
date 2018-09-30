@@ -13,48 +13,33 @@
 </ion-header>
 
 
+
 <ion-content padding>
   <ion-list class="accordion-list">
-      <!-- First Level -->
-      <ion-list-header *ngFor="let item of events; let i = index" no-lines no-padding>
-        <!-- Toggle Button -->
-        <button ion-item (click)="toggleSection(i)" detail-none [ngClass]="{'section-active': item.open, 'section': !item.open}">
-            <ion-icon item-left ios="ios-calendar" md="md-calendar" name="calendar"></ion-icon>
-          <ion-icon item-right name="arrow-down" *ngIf="!item.open"></ion-icon>
-          <ion-icon item-right name="arrow-up" *ngIf="item.open"></ion-icon>
-            {{ item.name }}
-        </button>
-   
-        <ion-list *ngIf="item.children && item.open" no-lines>
-          <!-- Second Level -->
-          <ion-list-header *ngFor="let child of item.children; let j = index" no-padding>
-            <!-- Toggle Button -->
-            <button ion-item (click)="toggleItem(i, j)" *ngIf="child.children" class="child" detail-none>
-              <ion-icon item-right name="add" *ngIf="!child.open"></ion-icon>
-              <ion-icon item-right name="close" *ngIf="child.open"></ion-icon>
-              {{ child.name }}
-            </button>
-   
-            <!-- Direct Add Button as Fallback -->
-            <ion-item *ngIf="!child.children" ion-item detail-none class="child-item" text-wrap (click)="presentPopover($event,child)">
-              <h2>{{ child.name }}</h2>
-              <p text-lowercase>{{ child.information }}</p>
-              <button ion-button outline item-end >{{ child.price }}</button>
-            </ion-item>
-   
-            <ion-list *ngIf="child.children && child.open">
-              <!-- Third Level -->
-              <ion-item *ngFor="let item of child.children; let k = index" detail-none class="child-item" text-wrap (click)="presentPopover($event,item)">
-                <h2>{{ item.name }}</h2>
-                <p text-lowercase>{{ item.information }}</p>
-                <!-- Direct Add Button -->
-                <button ion-button outline item-end >{{ item.price }}</button>
-              </ion-item>
-            </ion-list>
-   
-          </ion-list-header>
-        </ion-list>
-        
-      </ion-list-header>
-    </ion-list>
+    <!-- First Level -->
+    <ion-list-header *ngFor="let item of vendors; let i = index" no-lines no-padding>
+      <!-- Toggle Button -->
+      <button ion-item (click)="toggleSection(i,item)" detail-none [ngClass]="{'section-active': item.open, 'section': !item.open}">
+        <ion-icon item-left ios="ios-calendar" md="md-calendar" name="calendar"></ion-icon>
+        <ion-icon item-right name="arrow-down" *ngIf="!item.open && item.contactPerson.length>0"></ion-icon>
+        <ion-icon item-right name="arrow-up" *ngIf="item.open && item.contactPerson.length>0"></ion-icon>
+        <h2> {{ item.stationName }}</h2>
+        <h4>
+          At {{ item.vendorCompany }}
+        </h4>
+
+      </button>
+      <ion-list *ngIf="item.contactPerson && item.open" no-lines>
+        <!-- Third Level -->
+        <ion-item *ngFor="let child of item.contactPerson; let k = index" detail-none class="child-item" text-wrap>
+          <h2>{{ child.name }}</h2>
+          <h2>{{ child.firstName }} {{ child.lastName }}</h2>
+          <p><span *ngIf="child.title">{{ child.title }},</span> {{child.company}}</p>
+          <!-- Direct Add Button -->
+          <!-- <button ion-button outline item-end (click)="buyItem(item)">{{ child.isRaffle }}</button>
+          <button ion-button outline item-end (click)="buyItem(item)">{{ child.isCheckpoint }}</button> -->
+        </ion-item>
+      </ion-list>
+    </ion-list-header>
+  </ion-list>
 </ion-content>

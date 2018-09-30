@@ -19,4 +19,12 @@ export class DataServiceProvider {
     const getEventURL = this.global.ApiBase + 'api/person/GetVendorEvents/' + personId + '/' + this.global.PortalId
     return this.http.get(getEventURL);
   }
+  public GetVisitedPersons(personId: string) {
+    const getEventURL = this.global.ApiBase + 'api/readpoint/GetVisitedPersons/' + personId
+    return this.http.get(getEventURL);
+  }
+  public GetRaffleWinners(personId: string) {
+    const getEventURL = this.global.ApiBase + 'api/item/GetRaffleWinners/' + personId
+    return this.http.get(getEventURL);
+  }
 }
