@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController, LoadingController } from 'ionic-angular';
-import { HttpClient } from '@angular/common/http';
 import { ContactDetailsPage } from '../contact-details/contact-details';
 import { vendor } from '../../models/vendor';
 import { person } from '../../models/person';
@@ -18,10 +17,11 @@ export class WinnerPage {
   loader: any;
   vendors: vendor[] = [];
   person: person;
-  constructor(private dataService: DataServiceProvider, private storage: LocalStorageServiceProvider, private loadingCtrl: LoadingController, public navCtrl: NavController, private http: HttpClient) {
+  constructor(private modalCtrl: ModalController, private dataService: DataServiceProvider, private storage: LocalStorageServiceProvider, private loadingCtrl: LoadingController, public navCtrl: NavController) {
 
   }
   ionViewDidEnter() {
+    this.vendors=[];
     this.presentLoading();
     this.storage.get('Profile').then(response => {
       debugger;
@@ -76,10 +76,10 @@ export class WinnerPage {
   toggleItem(i, j) {
     this.vendors[i].contactPerson[j].open = !this.vendors[i].contactPerson[j].open;
   }
-  // presentPopover(event,data){
-  //   let modal = this.modalCtrl.create(ContactDetailsPage);
-  //   modal.present({
-  //     ev: event
-  //   });
-  // }
+  presentPopover(event, data) {
+    let modal = this.modalCtrl.create(ContactDetailsPage, { 'contact': data });
+    modal.present({
+      ev: event
+    });
+  }
 }

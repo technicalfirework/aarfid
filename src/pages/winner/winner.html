@@ -31,7 +31,8 @@
       </button>
       <ion-list *ngIf="item.contactPerson && item.open" no-lines>
         <!-- Third Level -->
-        <ion-item *ngFor="let child of item.contactPerson; let k = index" detail-none class="child-item" text-wrap>
+        <ion-item *ngFor="let child of item.contactPerson; let k = index" (click)="presentPopover(event,child)"
+          detail-none class="child-item" text-wrap>
           <h2>{{ child.name }}</h2>
           <h2>{{ child.firstName }} {{ child.lastName }}</h2>
           <p><span *ngIf="child.title">{{ child.title }},</span> {{child.company}}</p>

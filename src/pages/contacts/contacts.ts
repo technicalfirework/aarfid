@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, PopoverController, LoadingController } from 'ionic-angular';
+import { NavController, LoadingController, ModalController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { DataServiceProvider } from '../../providers/data-service/data-service';
 import { LocalStorageServiceProvider } from '../../providers/local-storage-service/local-storage-service';
 import { vendor } from '../../models/vendor';
 import { person } from '../../models/person';
 import { contacts } from '../../models/contacts';
+import { ContactDetailsPage } from '../contact-details/contact-details';
 @Component({
   selector: 'page-contacts',
   templateUrl: 'contacts.html',
@@ -14,10 +15,11 @@ export class ContactsPage {
   loader: any;
   vendors: vendor[] = [];
   person: person;
-  constructor(private dataService: DataServiceProvider, private storage: LocalStorageServiceProvider, private loadingCtrl: LoadingController, public navCtrl: NavController, private http: HttpClient) {
+  constructor(private modalCtrl: ModalController, private dataService: DataServiceProvider, private storage: LocalStorageServiceProvider, private loadingCtrl: LoadingController, public navCtrl: NavController, private http: HttpClient) {
 
   }
   ionViewDidEnter() {
+    this.vendors=[];
     this.presentLoading();
     this.storage.get('Profile').then(response => {
       debugger;
@@ -71,5 +73,11 @@ export class ContactsPage {
 
   toggleItem(i, j) {
     this.vendors[i].contactPerson[j].open = !this.vendors[i].contactPerson[j].open;
+  }
+  presentPopover(event, data) {
+    let modal = this.modalCtrl.create(ContactDetailsPage, { 'contact': data });
+    modal.present({
+      ev: event
+    });
   }
 }

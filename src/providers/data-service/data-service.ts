@@ -27,4 +27,9 @@ export class DataServiceProvider {
     const getEventURL = this.global.ApiBase + 'api/item/GetRaffleWinners/' + personId
     return this.http.get(getEventURL);
   }
+  //Check Option for localstorage
+  public getFiles(fileId: number, docType: string, personId: string) {
+    const getFilesURL = this.global.ApiBase + 'api/Person/GetFiles/' + fileId + '/' + this.global.PortalId + '/' + docType + '/' + personId;
+    return this.http.get(getFilesURL);
+  }
 }

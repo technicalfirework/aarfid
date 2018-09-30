@@ -32,6 +32,7 @@ export class EventsPage {
     this.myEvents[i].readPoints[j].open = !this.myEvents[i].readPoints[j].open;
   }
   ionViewDidEnter() {
+    this.myEvents=[];
     this.presentLoading();
     this.storage.get('Profile').then(response => {
       debugger;
